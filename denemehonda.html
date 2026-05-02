@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Honda Türkiye - The Power of Dreams. Otomobil, motosiklet, motor teknolojileri ve tarihçe.">
+    <meta name="theme-color" content="#cc0000">
+    <title>Honda | The Power of Dreams</title>
+    <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Honda.svg/960px-Honda.svg.png">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --honda-red: #cc0000;
+            --honda-red-dark: #990000;
+            --honda-red-glow: #ff1a1a;
+            --black: #0a0a0a;
+            --black-light: #121212;
+            --white: #ffffff;
+            --off-white: #fafafa;
+            --gray: #7f8c8d;
+            --light-gray: #ecf0f1;
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --transition-smooth: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            --box-shadow-card: 0 20px 35px -12px rgba(0,0,0,0.15);
+            --box-shadow-glow: 0 0 25px rgba(204,0,0,0.4);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--white);
+            color: #1e2a36;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--black); }
+        ::-webkit-scrollbar-thumb { background: var(--honda-red); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #ff3333; }
+
+        /* Navigation */
+        nav {
+            background: rgba(10, 10, 10, 0.95);
+            padding: 16px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 2000;
+            border-bottom: 2px solid var(--honda-red);
+            backdrop-filter: blur(15px);
+            transition: var(--transition-smooth);
+            flex-wrap: wrap;
+        }
+        nav.scrolled { padding: 10px 8%; background: rgba(0,0,0,0.98); box-shadow: 0 5px 30px rgba(0,0,0,0.3); }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--white);
+            font-size: 1.9rem;
+            letter-spacing: 3px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: var(--transition-bounce);
+            animation: logoPulse 2s infinite;
+        }
+        .logo:hover { transform: scale(1.05); text-shadow: 0 0 10px var(--honda-red); }
+        .logo span { color: var(--honda-red); }
+
+        @keyframes logoPulse {
+            0%, 100% { text-shadow: 0 0 0px var(--honda-red); }
+            50% { text-shadow: 0 0 8px var(--honda-red); }
+        }
+
+        .nav-links { display: flex; list-style: none; gap: 32px; flex-wrap: wrap; }
+        .nav-links li a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: var(--transition-smooth);
+            padding: 8px 0;
+            border-bottom: 2px solid transparent;
+            position: relative;
+        }
+        .nav-links li a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--honda-red);
+            transition: 0.3s;
+        }
+        .nav-links li a:hover::before,
+        .nav-links li a.active-nav::before { width: 100%; }
+        .nav-links li a:hover,
+        .nav-links li a.active-nav { color: var(--honda-red); }
+
+        @media (max-width: 850px) {
+            nav { flex-direction: column; gap: 12px; padding: 12px 5%; }
+            .nav-links { justify-content: center; gap: 18px; }
+            .nav-links li a { font-size: 0.7rem; }
+        }
+        @media (max-width: 550px) { .nav-links { gap: 12px; } .nav-links li a { font-size: 0.6rem; } }
+
+        /* Page Transitions */
+        .page-content {
+            display: none;
+            padding-top: 100px;
+            min-height: 100vh;
+            animation: fadeInUp 0.7s ease forwards;
+        }
+        .page-content.active { display: block; }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container { padding: 60px 8%; max-width: 1600px; margin: 0 auto; }
+        
+        .section-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 70px;
+            position: relative;
+            letter-spacing: 3px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #1a1a1a, var(--honda-red));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .section-title::after {
+            content: '';
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--honda-red), #ff6a6a);
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 4px;
+            animation: pulseWidth 2s infinite;
+        }
+        @keyframes pulseWidth {
+            0%, 100% { width: 100px; opacity: 1; }
+            50% { width: 140px; opacity: 0.7; }
+        }
+
+        .sub-heading {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.7rem;
+            color: var(--honda-red);
+            margin: 50px 0 30px;
+            text-transform: uppercase;
+            border-left: 6px solid var(--honda-red);
+            padding-left: 20px;
+            font-weight: 700;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            overflow: hidden;
+        }
+        .hero-bg-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            animation: slowZoom 25s infinite alternate;
+        }
+        @keyframes slowZoom {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.85) 100%);
+            z-index: 2;
+        }
+        .hero h1 {
+            font-family: 'Orbitron';
+            font-size: clamp(2.8rem, 8vw, 5.5rem);
+            letter-spacing: 6px;
+            margin-bottom: 1rem;
+            z-index: 3;
+            animation: glitchText 3s infinite;
+        }
+        @keyframes glitchText {
+            0%, 100% { text-shadow: 2px 0 red, -2px 0 blue; }
+            25% { text-shadow: -3px 0 red, 3px 0 blue; }
+            50% { text-shadow: 3px 0 red, -3px 0 blue; }
+            75% { text-shadow: -2px 0 red, 2px 0 blue; }
+        }
+        .hero p {
+            font-size: 1.4rem;
+            letter-spacing: 2px;
+            z-index: 3;
+            background: rgba(0,0,0,0.5);
+            padding: 8px 25px;
+            border-radius: 50px;
+            backdrop-filter: blur(5px);
+        }
+        .hero button {
+            z-index: 3;
+            background: linear-gradient(45deg, var(--honda-red), #ff4444);
+            border: none;
+            padding: 16px 50px;
+            font-weight: bold;
+            font-family: 'Orbitron';
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 50px;
+            margin-top: 40px;
+            box-shadow: 0 10px 25px rgba(204,0,0,0.4);
+            transition: 0.3s;
+            color: white;
+        }
+        .hero button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 35px rgba(204,0,0,0.6);
+            letter-spacing: 2px;
+        }
+
+        /* History */
+        .history-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            margin-bottom: 100px;
+        }
+        .history-item img {
+            width: 100%;
+            border-radius: 30px;
+            box-shadow: 20px 20px 0 var(--honda-red);
+            transition: var(--transition-bounce);
+        }
+        .history-item img:hover {
+            transform: translateY(-8px);
+            box-shadow: 25px 25px 0 #990000;
+        }
+        .history-item:nth-child(even) { direction: rtl; }
+        .history-item:nth-child(even) .text-box { direction: ltr; }
+        .text-box {
+            background: rgba(255,255,255,0.95);
+            padding: 35px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+        .text-box h3 {
+            font-family: 'Orbitron';
+            font-size: 2rem;
+            color: var(--honda-red);
+            margin-bottom: 20px;
+        }
+        .text-box p { line-height: 1.7; color: #2c3e50; }
+
+        /* Models Grid */
+        .models-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 45px;
+        }
+        .car-card {
+            background: white;
+            border-radius: 32px;
+            overflow: hidden;
+            transition: var(--transition-bounce);
+            border: 1px solid rgba(204,0,0,0.2);
+            box-shadow: var(--box-shadow-card);
+            position: relative;
+            overflow: hidden;
+        }
+        .car-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 80%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+            transform: rotate(25deg);
+        }
+        .car-card:hover::after {
+            opacity: 1;
+            animation: shine 0.6s ease-out;
+        }
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(25deg); }
+            100% { transform: translateX(100%) rotate(25deg); }
+        }
+        .car-card:hover {
+            transform: translateY(-15px) rotateX(3deg);
+            border-color: var(--honda-red);
+            box-shadow: var(--box-shadow-glow);
+        }
+        .car-card img {
+            width: 100%;
+            height: 230px;
+            object-fit: contain;
+            background: linear-gradient(135deg, #fff, #f5f5f5);
+            padding: 25px;
+            transition: 0.5s;
+        }
+        .car-card:hover img { transform: scale(1.05); }
+        .car-info { padding: 30px; }
+        .car-info h3 { font-family: 'Orbitron'; font-size: 1.4rem; margin-bottom: 12px; }
+        .car-info p { font-size: 0.95rem; color: #555; line-height: 1.6; margin-bottom: 20px; }
+        .car-price { color: var(--honda-red); font-weight: 800; font-size: 1.25rem; border-top: 2px solid #eee; padding-top: 15px; }
+
+        /* Engine Grid */
+        .engine-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+            gap: 35px;
+            margin-bottom: 60px;
+        }
+        .engine-card {
+            background: white;
+            border-radius: 30px;
+            overflow: hidden;
+            border: 1px solid #eef2f9;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        .engine-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 80%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+            transform: rotate(25deg);
+        }
+        .engine-card:hover::after {
+            opacity: 1;
+            animation: shine 0.6s ease-out;
+        }
+        .engine-card:hover {
+            transform: scale(1.03) translateY(-8px);
+            border-color: var(--honda-red);
+            box-shadow: 0 20px 35px rgba(204,0,0,0.2);
+        }
+        .engine-img-box { height: 210px; overflow: hidden; background: #111; }
+        .engine-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.6s;
+        }
+        .engine-card:hover .engine-img-box img {
+            transform: scale(1.1);
+            filter: brightness(1.05);
+        }
+        .engine-content { padding: 28px; text-align: center; }
+        .engine-content h3 { font-family: 'Orbitron'; font-size: 1.2rem; margin-bottom: 10px; color: var(--honda-red); }
+        .engine-content p { font-size: 0.85rem; color: #666; line-height: 1.5; }
+
+        /* Tables */
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 28px;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            margin-bottom: 40px;
+        }
+        table { width: 100%; border-collapse: collapse; min-width: 700px; }
+        th {
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a, #1a1a1a);
+            background-size: 200% 200%;
+            animation: gradientMove 3s ease infinite;
+            color: white;
+            padding: 22px 16px;
+            font-family: 'Orbitron';
+            font-weight: 600;
+        }
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        td { padding: 18px 14px; border-bottom: 1px solid #f0f0f0; text-align: center; transition: 0.2s; }
+        tr:hover td { background: rgba(204,0,0,0.05); }
+        .spec-label { background: #f8f9fc; font-weight: 700; text-align: left; }
+
+        /* Contact */
+        .contact-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1.6fr;
+            gap: 60px;
+            background: linear-gradient(145deg, #fff, #f8f8fc);
+            padding: 55px;
+            border-radius: 48px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15);
+        }
+        .contact-info h3 { font-family: 'Orbitron'; font-size: 1.8rem; margin-bottom: 28px; }
+        .contact-info p { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; font-size: 1rem; }
+        .contact-info i { color: var(--honda-red); font-size: 1.4rem; width: 30px; }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            border: 2px solid #eef2f6;
+            border-radius: 28px;
+            font-family: 'Montserrat', sans-serif;
+            transition: 0.3s;
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--honda-red);
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(204,0,0,0.1);
+        }
+        .btn-submit {
+            background: linear-gradient(90deg, var(--honda-red), #e60000);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 40px;
+            font-family: 'Orbitron';
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 100%;
+        }
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(204,0,0,0.3);
+            letter-spacing: 1px;
+        }
+
+        /* Footer */
+        footer {
+            background: #0a0a0a;
+            padding: 60px 8% 40px;
+            text-align: center;
+            margin-top: 40px;
+        }
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 35px;
+            margin-bottom: 30px;
+        }
+        .social-icons a {
+            color: #ddd;
+            font-size: 2rem;
+            transition: 0.3s;
+            display: inline-block;
+        }
+        .social-icons a:hover {
+            color: var(--honda-red);
+            transform: translateY(-8px) scale(1.2);
+        }
+        footer p { color: rgba(255,255,255,0.6); font-size: 0.9rem; }
+
+        /* Cards fade in */
+        .car-card, .engine-card, .history-item {
+            opacity: 0;
+            animation: cardFadeIn 0.6s ease forwards;
+        }
+        @keyframes cardFadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .car-card:nth-child(1) { animation-delay: 0.05s; }
+        .car-card:nth-child(2) { animation-delay: 0.1s; }
+        .car-card:nth-child(3) { animation-delay: 0.15s; }
+        .car-card:nth-child(4) { animation-delay: 0.2s; }
+        .car-card:nth-child(5) { animation-delay: 0.25s; }
+        .car-card:nth-child(6) { animation-delay: 0.3s; }
+        .engine-card:nth-child(1) { animation-delay: 0.05s; }
+        .engine-card:nth-child(2) { animation-delay: 0.1s; }
+        .engine-card:nth-child(3) { animation-delay: 0.15s; }
+        .engine-card:nth-child(4) { animation-delay: 0.2s; }
+        .engine-card:nth-child(5) { animation-delay: 0.25s; }
+        .engine-card:nth-child(6) { animation-delay: 0.3s; }
+
+        @media (max-width: 768px) {
+            .history-item, .contact-wrapper { grid-template-columns: 1fr; gap: 40px; }
+            .section-title { font-size: 2rem; }
+            .sub-heading { font-size: 1.3rem; }
+            .contact-wrapper { padding: 30px; }
+            .history-item img { box-shadow: 12px 12px 0 var(--honda-red); }
+        }
+        @media (max-width: 480px) {
+            .car-card img { height: 180px; }
+            .engine-img-box { height: 170px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo" onclick="showPage('home')">H<span>ONDA</span></div>
+    <ul class="nav-links">
+        <li><a href="#" data-page="home">Ana Sayfa</a></li>
+        <li><a href="#" data-page="history">Tarihçe</a></li>
+        <li><a href="#" data-page="models">Modeller</a></li>
+        <li><a href="#" data-page="engines">Motorlar</a></li>
+        <li><a href="#" data-page="compare">Karşılaştırma</a></li>
+        <li><a href="#" data-page="contact">İletişim</a></li>
+    </ul>
+</nav>
+
+<main>
+   
+    <div id="home" class="page-content active">
+        <section class="hero">
+            <img src="https://static.wixstatic.com/media/2e2f73_3f4da05190dc4ca4a06a60eb261d5229~mv2.jpeg" alt="Honda" class="hero-bg-img">
+            <div class="hero-overlay"></div>
+            <h1>HAYALLERİN GÜCÜ</h1>
+            <p>The Power of Dreams</p>
+            <button onclick="showPage('models')">🚗 KOLEKSİYONU KEŞFET</button>
+        </section>
+    </div>
+
+
+    <div id="history" class="page-content">
+        <div class="container">
+            <h2 class="section-title">TARİHÇEMİZ</h2>
+            <div class="history-item">
+                <img src="https://static.wixstatic.com/media/2e2f73_fdb36644cc794fecbc785327cba46f93~mv2.png" alt="Soichiro Honda">
+                <div class="text-box">
+                    <h3>1948: Bir Mühendisin Rüyası</h3>
+                    <p>Soichiro Honda (1906–1991), dünyanın en büyük otomotiv ve motosiklet üreticilerinden biri olan Honda Motor Company'nin kurucusu, vizyoner bir mühendis ve sanayicidir. Hayatı ve Kariyerindeki Dönüm Noktaları: Çıraklıktan Atölyeye: 15 yaşında Tokyo'da bir tamirhanede çırak olarak işe başlamış, 6 yıl sonra kendi tamir atölyesini açmıştır. İlk Girişim: 1937'de piston segmanları üretmek için Tokai Seiki şirketini kurmuş; ancak savaş sırasındaki bombardımanlar ve büyük bir deprem sonucu fabrikası yıkılmıştır. Bu işletmeyi Toyota'ya satarak yeni bir başlangıç yapmıştır. Honda'nın Doğuşu: 1946'da bisikletlere küçük jeneratör motorları takma fikriyle Honda Teknik Araştırma Enstitüsü'nü kurmuş, 1948'de ise Takeo Fujisawa ile ortaklaşa Honda Motor Company'yi hayata geçirmiştir. Küresel Başarı: Mühendisliğe olan tutkusu sayesinde Honda'yı dünyanın en büyük motosiklet üreticisi yapmış; ardından otomobil, uçak ve güç ekipmanları alanında küresel bir dev haline getirmiştir.</p>
+                </div>
+            </div>
+            <div class="history-item">
+                <img src="https://static.wixstatic.com/media/2e2f73_2a84bb09bb81492c8f2cbd706bf4b801~mv2.webp" alt="Honda Racing">
+                <div class="text-box">
+                    <h3>Yarışçı DNA'sı</h3>
+                    <p>Honda için pistler bir laboratuardır. Formula 1'den MotoGP'ye kadar her alanda kazanılan zaferler, bugün kullandığınız otomobillerin güvenliğini ve performansını oluşturur. Honda Racing (HRC), bu tutkunun merkezidir.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+    <div id="models" class="page-content">
+        <div class="container">
+            <h2 class="section-title">MODELLERİMİZ</h2>
+            <div class="models-grid">
+                <div class="car-card"><img src="https://static.wixstatic.com/media/2e2f73_9e73ed34ddd44d9c885127e9a4b6372b~mv2.jpg" alt="Civic Type R"><div class="car-info"><h3>Civic Type R</h3><p>Pistlerin en hızlı önden çekişli otomobili. 0-100 km/s hızlanması 5.4 saniye, son hızı 275 km/s.</p><p class="car-price">5.500.000 TL'den başlayanlarla</p></div></div>
+                <div class="car-card"><img src="https://www.arabam.com/blog/wp-content/uploads/2016/01/075954_2016_honda_CR-V.jpg" alt="CR-V"><div class="car-info"><h3>Honda CR-V</h3><p>Sessiz sürüş, geniş iç hacim ve kendi kendini şarj eden hibrit motoruyla aileler için tasarlanmıştır.</p><p class="car-price">6.160.000 TL'den başlayanlarla</p></div></div>
+                <div class="car-card"><img src="https://static.wixstatic.com/media/2e2f73_e620a73bc2774b018446e87653862fd3~mv2.jpg" alt="Jazz"><div class="car-info"><h3>Honda Jazz</h3><p>Şehrin en akıllı ve ekonomik e:HEV modeli. Gelişmiş Honda SENSING teknolojisi ile donatılmıştır.</p><p class="car-price">1.880.000 TL'den başlayanlarla</p></div></div>
+                <div class="car-card"><img src="https://d1ek71enupal89.cloudfront.net/images/blocks_png/HONDA/HR-V/5DR/25HonHrvAdvEHev5drGryFR3_800.jpg" alt="HR-V"><div class="car-info"><h3>Honda HR-V</h3><p>Modern tasarım, yüksek sürüş pozisyonu ve kompakt yapısıyla şehir hayatına tam uyum.</p><p class="car-price">2.390.000 TL'den başlayanlarla</p></div></div>
+                <div class="car-card"><img src="https://static.wixstatic.com/media/2e2f73_3cb46accd5bb4a1fb323ac9672f4133f~mv2.jpg" alt="Civic Sedan"><div class="car-info"><h3>Honda Civic Sedan</h3><p>Konfor odaklı, hibrit seçenekli ve teknolojik iç mekan.</p><p class="car-price">2.360.000 TL'den başlayanlarla</p></div></div>
+                <div class="car-card"><img src="https://static.wixstatic.com/media/2e2f73_4d56192ad76e46b680d4f6b64b1cf166~mv2.jpg" alt="Prelude"><div class="car-info"><h3>Honda Prelude</h3><p>Geleceğin spor otomobili. Dinamik şasi ve hibrit gücünün efsanevi Prelude ismiyle buluşması.</p><p class="car-price">5.400.000 TL'den başlayanlarla</p></div></div>
+            </div>
+        </div>
+    </div>
+
+   
+    <div id="engines" class="page-content">
+        <div class="container">
+            <h2 class="section-title">GÜCÜN DÜNYASI</h2>
+            <h3 class="sub-heading">Otomobil Teknolojileri</h3>
+            <div class="engine-grid">
+                <div class="engine-card"><div class="engine-img-box"><img src="https://autoimage.capitalone.com/cms/Auto/assets/images/2942-hero-Honda-S2000-VTEC-Engine.jpg" alt="VTEC"></div><div class="engine-content"><h3>VTEC TEKNOLOJİSİ</h3><p>Yüksek devirlerde supap zamanlamasını değiştirerek sıradan bir motoru performans makinesine dönüştüren efsane.</p></div></div>
+                <div class="engine-card"><div class="engine-img-box"><img src="https://assets.autobuzz.my/wp-content/uploads/2021/07/29184135/2021-Honda-HRV-eHEV-components-4.jpg" alt="eHEV"></div><div class="engine-content"><h3>e:HEV HİBRİT</h3><p>Kendi kendini şarj eden, iki elektrik motoruyla sessiz ve ultra verimli sürüş sunan geleceğin teknolojisi.</p></div></div>
+                <div class="engine-card"><div class="engine-img-box"><img src="https://conceptbunny.com/wp-content/uploads/2018/03/VTEC-E_engine.jpg" alt="VTEC Turbo"></div><div class="engine-content"><h3>VTEC TURBO</h3><p>Alt devirlerden itibaren yüksek tork sağlayan, kompakt ama inanılmaz güçlü turbo besleme sistemi.</p></div></div>
+            </div>
+            <h3 class="sub-heading">Efsanevi Motosikletler</h3>
+            <div class="engine-grid">
+                <div class="engine-card"><div class="engine-img-box"><img src="https://www.motosikletsitesi.com/wp-content/uploads/2023/10/honda_crf1100l_africa_twin_2024.jpg" alt="Africa Twin"></div><div class="engine-content"><h3>CRF1100L AFRICA TWIN</h3><p>Dünyanın en zorlu yolları için tasarlanmış gerçek bir macera ikonu. DCT şanzıman seçeneği ile rakipsiz.</p></div></div>
+                <div class="engine-card"><div class="engine-img-box"><img src="https://cdn.v5.honda.com.tr/img/motosiklet/modelImg/cbr-1000rr-r-v2.png" alt="Fireblade"></div><div class="engine-content"><h3>CBR1000RR-R FIREBLADE</h3><p>Pistlerin kralı. MotoGP teknolojisiyle donatılmış, 217 beygir gücünde safkan bir hız makinesi.</p></div></div>
+                <div class="engine-card"><div class="engine-img-box"><img src="https://inallar.com.tr//media/color/beyaz8.png" alt="Gold Wing"></div><div class="engine-content"><h3>GL1800 GOLD WING</h3><p>Motosiklet dünyasının lüks limuzini. Geri vites, hava yastığı ve 6 silindirli motoruyla konforun zirvesi.</p></div></div>
+                <div class="engine-card"><div class="engine-img-box"><img src="https://www.motorcular.com/files/1000x1000_honda_pcx_125_2018_11_1072156504.jpg" alt="PCX125"></div><div class="engine-content"><h3>Honda Pcx125</h3><p>125 cc, Sıvı soğutmalı, Şanzıman: Otomatik Vites (CVT). Yakıt Kapasitesi: 8.1 Litre. Performans: Ortalama 100 km/s hıza ulaşabilir.</p></div></div>
+                <div class="engine-card"><div class="engine-img-box"><img src="https://inallar.com.tr/media/color/gri6.png" alt="NT1100"></div><div class="engine-content"><h3>Honda NT1100</h3><p>Motor: 1084 cc, sıvı soğutmalı, paralel çift silindirli. Performans: 102 HP güç ve 104 Nm tork.</p></div></div>
+                <div class="engine-card"><div class="engine-img-box"><img src="https://powersports.honda.com/motorcycle/standard/-/media/products/family/cb750-hornet/trims/trim-main/cb750-hornet-e-clutch/2026/2026-cb750-hornet-e-clutch-matte_nightshade_blue-1505x923.png" alt="CB750 Hornet"></div><div class="engine-content"><h3>Naked CB750 Hornet</h3><p>Motor: 755 cc, 91 HP güç. Wheelie Control ve Motor Freni Kontrolü ile güvenli sürüş.</p></div></div>
+            </div>
+        </div>
+    </div>
+
+   
+    <div id="compare" class="page-content">
+        <div class="container">
+            <h2 class="section-title">ARABA KARŞILAŞTIRMA</h2>
+            <div class="table-wrapper">
+                <table>
+                    <thead><tr><th class="spec-label">Özellikler</th><th>Civic Type R</th><th>Civic Sedan</th><th>CR-V e:HEV</th><th>Honda Prelude</th><th>Honda Jazz</th><th>Honda HR-V</th></tr></thead>
+                    <tbody>
+                        <tr><td class="spec-label">Beygir Gücü</td><td>329 HP</td><td>182 HP</td><td>184 HP</td><td>200-207HP</td><td>122 PS</td><td>131 PS</td></tr>
+                        <tr><td class="spec-label">0-100 Hızlanma</td><td>5.4 sn</td><td>8.1 sn</td><td>9.2 sn</td><td>yaklaşık 7sn</td><td>9.4-9.6 sn</td><td>10.6-10.7 sn</td></tr>
+                        <tr><td class="spec-label">Yakıt Tüketimi</td><td>8.2 L</td><td>6.7 L</td><td>4.8 L</td><td>4.5-5.0 L</td><td>4.5-4.8 L</td><td>5.4 L</td></tr>
+                        <tr><td class="spec-label">Çekiş Sistemi</td><td>Önden Çekiş</td><td>Önden Çekiş</td><td>4x4 AWD</td><td>Önden Çekiş</td><td>Önden Çekiş</td><td>Önden Çekiş</td></tr>
+                        <tr><td class="spec-label">Motor Tipi</td><td>2.0L VTEC Turbo</td><td>1.5L VTEC Turbo</td><td>2.0L Hibrit+Elektrik</td><td>2.0L 4 Silindirli Hibrit</td><td>1.5L i-VTEC Hibrit</td><td>1.5L i-VTEC Hibrit</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <h2 class="section-title">MOTOSİKLET KARŞILAŞTIRMA</h2>
+            <div class="table-wrapper">
+                <table>
+                    <thead><tr><th class="spec-label">Özellikler</th><th>CBR1000RR-R</th><th>AFRICA TWIN</th><th>PCX125</th><th>GOLD WING</th><th>CB750 Hornet</th><th>NT1100</th></tr></thead>
+                    <tbody>
+                        <tr><td class="spec-label">Beygir Gücü</td><td>217 HP</td><td>102 HP</td><td>95 HP</td><td>126 HP</td><td>58 PS</td><td>58 PS</td></tr>
+                        <tr><td class="spec-label">0-100 Hızlanma</td><td>2.9 sn</td><td>3.8 sn</td><td>3.6 sn</td><td>4.2 sn</td><td>5.2 sn</td><td>4.8 sn</td></tr>
+                        <tr><td class="spec-label">Yakıt Tüketimi</td><td>6.3 L</td><td>4.9 L</td><td>4.9 L</td><td>5.5 L</td><td>3.5 L</td><td>3.6 L</td></tr>
+                        <tr><td class="spec-label">Çekiş Sistemi</td><td>Zincir</td><td>Zincir</td><td>Zincir</td><td>Şaft</td><td>Zincir</td><td>Zincir</td></tr>
+                        <tr><td class="spec-label">Motor</td><td>999cc Sıralı 4 Sil.</td><td>1084cc Paralel Çift</td><td>649cc Sıralı 4 Sil.</td><td>1833cc 6 Sil. Boxer</td><td>745cc Paralel Çift</td><td>745cc Paralel Çift</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="contact" class="page-content">
+        <div class="container">
+            <h2 class="section-title">BİZE ULAŞIN</h2>
+            <div class="contact-wrapper">
+                <div class="contact-info">
+                    <h3>İletişim Bilgileri</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Honda Genel Müdürlük, Antalya</p>
+                    <p><i class="fas fa-phone"></i> 0850 123 0 321</p>
+                    <p><i class="fas fa-envelope"></i> info@honda.com.tr</p>
+                    <p><i class="far fa-clock"></i> Pazartesi - Cumartesi: 09:00 - 18:00</p>
+                </div>
+                
+             
+			 
+                <form action="https://formspree.io/f/xwvypljr" method="POST">
+                    <input type="text" name="name" placeholder="Adınız Soyadınız" required>
+                    <input type="email" name="email" placeholder="E-posta Adresiniz" required>
+                    <select name="model" required>
+                        <option value="">İlgilendiğiniz Modeli Seçin</option>
+                        <option>Civic Type R</option>
+                        <option>CR-V</option>
+                        <option>Jazz</option>
+                        <option>Civic Sedan</option>
+                        <option>HR-V</option>
+                        <option>Prelude</option>
+                        <option>PCX125</option>
+                        <option>Africa Twin</option>
+                        <option>Fireblade</option>
+                        <option>Gold Wing</option>
+                        <option>NT1100</option>
+                        <option>CB750 Hornet</option>
+                    </select>
+                    <textarea name="message" placeholder="Mesajınız..." rows="5" required></textarea>
+                    <button type="submit" class="btn-submit">🚀 BİLGİ TALEBİ GÖNDER</button>
+                </form>
+            </div>
+            <br><br>
+            
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div class="social-icons">
+        <a href="https://www.facebook.com/Honda" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook"></i></a>
+        <a href="https://www.instagram.com/honda" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.youtube.com/honda" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
+        <a href="https://www.twitter.com/honda" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+        <a href="https://www.linkedin.com/company/honda" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>
+    </div>
+    <p>&copy; 2026 Honda Motor Company | The Power of Dreams | Tüm Hakları Saklıdır.</p>
+</footer>
+
+<script>
+    function showPage(pageId) {
+        const pages = document.querySelectorAll('.page-content');
+        pages.forEach(page => page.classList.remove('active'));
+        const targetPage = document.getElementById(pageId);
+        if(targetPage) targetPage.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+        const navLinks = document.querySelectorAll('.nav-links a');
+        navLinks.forEach(link => {
+            link.classList.remove('active-nav');
+            if(link.getAttribute('data-page') === pageId) link.classList.add('active-nav');
+        });
+    }
+    
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const page = link.getAttribute('data-page');
+            if(page) showPage(page);
+        });
+    });
+    
+    window.addEventListener('scroll', () => {
+        const nav = document.querySelector('nav');
+        if(window.scrollY > 50) nav.classList.add('scrolled');
+        else nav.classList.remove('scrolled');
+    });
+    
+    const activePage = document.querySelector('.page-content.active')?.id;
+    if(activePage) {
+        const activeLink = document.querySelector(`.nav-links a[data-page="${activePage}"]`);
+        if(activeLink) activeLink.classList.add('active-nav');
+    }
+</script>
+
+
+</body>
+</html>
